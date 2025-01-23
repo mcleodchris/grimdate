@@ -26,6 +26,9 @@ fn format_date<T: TimeZone>(date: DateTime<T>) -> String {
     format!("0 {:03} {:03}.M{}", imperial_fraction, year, millennium)
 }
 
+#[cfg(test)]
+mod tests;
+
 // Example usage:
 fn main() {
     let date = Utc::now();
