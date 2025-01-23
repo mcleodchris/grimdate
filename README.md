@@ -1,6 +1,6 @@
 # Grimdate
 
-A super simple command-line utility which does one thing: return the current date/time formatted to use the Imperial Dating System from Warhammer 40,000.
+A super simple command-line utility which does one thing: return the current date/time formatted to use the [Imperial Dating System](https://wh40k.lexicanum.com/wiki/Imperial_Dating_System) from Warhammer 40,000.
 
 ## Building
 
