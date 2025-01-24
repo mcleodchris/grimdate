@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
 
 jobs:
   build:
@@ -31,27 +31,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+      
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.target }}
-
+      
       - name: Build
         run: cargo build --release --target ${{ matrix.target }}
-
+      
       - name: Prepare asset
-        shell: bash
+        shell: pwsh
         run: |
-          mkdir -p release
-          if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            cp "target/${{ matrix.target }}/release/${{ matrix.artifact_name }}" "release/${{ matrix.asset_name }}.exe"
-            cd release && zip "${{ matrix.asset_name }}.zip" "${{ matrix.asset_name }}.exe"
-          else
-            cp "target/${{ matrix.target }}/release/${{ matrix.artifact_name }}" "release/${{ matrix.asset_name }}"
-            cd release && zip "${{ matrix.asset_name }}.zip" "${{ matrix.asset_name }}"
-          fi
-
+          New-Item -ItemType Directory -Force -Path release
+          if ("${{ matrix.os }}" -eq "windows-latest") {
+            Copy-Item "target/${{ matrix.target }}/release/${{ matrix.artifact_name }}" "release/${{ matrix.asset_name }}.exe"
+            Compress-Archive -Path "release/${{ matrix.asset_name }}.exe" -DestinationPath "release/${{ matrix.asset_name }}.zip"
+          } else {
+            Copy-Item "target/${{ matrix.target }}/release/${{ matrix.artifact_name }}" "release/${{ matrix.asset_name }}"
+            Compress-Archive -Path "release/${{ matrix.asset_name }}" -DestinationPath "release/${{ matrix.asset_name }}.zip"
+          }
+      
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -65,7 +65,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
-
+      
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
