@@ -28,6 +28,41 @@ cargo install --path .
 
 You can download the pre-built binaries from the [releases page](https://github.com/mcleodchris/grimdate/releases). Choose the appropriate binary for your operating system and architecture, and extract it to a location in your `PATH` for your terminal to find it.
 
+#### Windows
+Extract the zip and move `grimdate.exe` to a location in your PATH, or create a new directory and add it to your PATH:
+```powershell
+# Create directory and move executable
+mkdir C:\Tools
+mv grimdate.exe C:\Tools
+# Add to PATH (run in PowerShell as Administrator)
+$env:Path += ";C:\Tools"
+setx /M PATH "$env:Path"
+```
+
+#### macOS/Linux
+First make the binary executable:
+```bash
+chmod +x grimdate-*
+```
+
+On macOS, you'll need to remove the quarantine flag:
+```bash
+xattr -d com.apple.quarantine grimdate-macos-*
+```
+
+Then install to a location in your PATH:
+```bash
+# Option 1: /usr/local/bin (requires sudo)
+sudo cp grimdate-* /usr/local/bin/grimdate
+
+# Option 2: ~/bin (no sudo required)
+mkdir -p ~/bin
+cp grimdate-* ~/bin/grimdate
+# Add to PATH if needed (for bash/zsh)
+echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc  # or ~/.zshrc
+source ~/.bashrc  # or ~/.zshrc
+```
+
 ## Usage
 
 Grimdate supports several command-line options:
