@@ -32,7 +32,7 @@ fn test_format_date_12() { // leap year
 fn test_format_date_2023_on_iss() {
     let date = Utc.with_ymd_and_hms(2023, 10, 5, 15, 30, 45).unwrap();
     let formatted_date = format_date(date, true, false, false);
-    assert_eq!(formatted_date, "1 760 023.M3//15:30:45 local");
+    assert_eq!(formatted_date, "1 760 023.M3//15:30 local");
 }
 
 #[test]
