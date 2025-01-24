@@ -23,7 +23,10 @@ fn format_date<T: TimeZone>(date: DateTime<T>) -> String {
     // Calculate millennium
     let millennium = (utc_date.year().abs() / 1000) + 1;
     
-    format!("0 {:03} {:03}.M{}", imperial_fraction, year, millennium)
+    // Get local time
+    let local_time = format!("{:02}:{:02}", date.hour(), date.minute());
+    
+    format!("0 {:03} {:03}.M{}//{} local", imperial_fraction, year, millennium, local_time)
 }
 
 #[cfg(test)]
